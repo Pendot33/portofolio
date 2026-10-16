@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Gondul | Developer</title>
+    <!-- Font Google: Poppins & Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-color: #120b22;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(216, 180, 254, 0.22);
+            --primary-purple: #a855f7;
+            --light-purple: #c084fc;
+            --accent-pink: #f472b6;
+            --text-main: #f3f4f6;
+            --text-muted: #d1d5db;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND GLOW --- */
+        .glow-1 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(168, 85, 247, 0.35);
+            filter: blur(150px);
+            border-radius: 50%;
+            top: 0%;
+            left: 5%;
+            z-index: -1;
+        }
+
+        .glow-2 {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            background: rgba(236, 72, 153, 0.25);
+            filter: blur(160px);
+            border-radius: 50%;
+            bottom: 10%;
+            right: 5%;
+            z-index: -1;
+        }
+
+        /* --- GLASSMORPHISM CARD --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            margin: 20px auto 30px;
+            width: 88%;
+            max-width: 1200px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 6px 14px;
+            border-radius: 12px;
+        }
+
+        .nav-links button:hover, .nav-links button.active {
+            color: #ffffff;
+            background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+
+        /* --- MAIN CONTENT SECTIONS --- */
+        .section-page {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            padding: 20px 8% 60px;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .section-page.active-page {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- DASHBOARD / SAMBUTAN --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #e879f9, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #9333ea, #c084fc);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.8);
+        }
+
+        /* --- TERMINAL GLASSMORPHISM --- */
+        .terminal-container {
+            width: 100%;
+            margin-top: 25px;
+            background: rgba(15, 10, 26, 0.85);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #a78bfa;
+            font-size: 0.82rem;
+            font-family: 'Fira Code', monospace;
+            margin-left: 10px;
+        }
+
+        .terminal-body {
+            padding: 22px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.92rem;
+            color: #f3f4f6;
+            line-height: 1.8;
+            min-height: 220px;
+            white-space: pre-wrap;
+        }
+
+        /* Syntax Highlight Colors */
+        .kw { color: #f472b6; font-weight: 600; }
+        .fn { color: #60a5fa; }
+        .str { color: #34d399; }
+        .cm { color: #9ca3af; font-style: italic; }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background-color: var(--light-purple);
+            vertical-align: middle;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- PAGE STYLING --- */
+        .page-title {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-card {
+            padding: 40px;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        /* SKILLS BADGES */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .skill-badge {
+            background: rgba(168, 85, 247, 0.18);
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: #f3e8ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        /* PROJECTS GRID */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .project-card {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(192, 132, 252, 0.25) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        .project-card:hover::before { opacity: 1; }
+        .project-card > div { transform: translateZ(30px); }
+
+        .project-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--light-purple);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .project-card h3 {
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* --- CONTACT FORM STYLES --- */
+        .contact-form {
+            max-width: 600px;
+            margin: 25px auto 0;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light-purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .platform-select {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .platform-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .platform-option input[type="radio"] {
+            display: none;
+        }
+
+        .platform-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .platform-option input[type="radio"]:checked + .platform-label {
+            background: rgba(168, 85, 247, 0.25);
+            border-color: var(--light-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #9333ea, #c084fc);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.7);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #9ca3af;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Glow Background Effects -->
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+
+    <!-- Header Navbar dengan Menu -->
+    <nav class="glass-card">
+        <div class="logo" onclick="switchPage('home')">Portofolio Gondul</div>
+        <ul class="nav-links">
+            <li><button onclick="switchPage('home')" id="nav-home" class="active">Beranda</button></li>
+            <li><button onclick="switchPage('skills')" id="nav-skills">Keahlian</button></li>
+            <li><button onclick="switchPage('projects')" id="nav-projects">Projek</button></li>
+            <li><button onclick="switchPage('about')" id="nav-about">Tentang</button></li>
+            <li><button onclick="switchPage('contact')" id="nav-contact">Kontak</button></li>
+        </ul>
+    </nav>
+
+    <!-- 1. HALAMAN BERANDA / DASBOR UTAMA -->
+    <section id="page-home" class="section-page active-page">
+        <div class="hero">
+            <h1>Selamat Datang di <span>Portofolio Gondul</span></h1>
+            <p>Jelajahi keahlian, rekam jejak karier, serta portofolio pengembangan AI Agent, Bot Otomatisasi, dan Sistem Web Modern.</p>
+            <button class="btn-primary" onclick="switchPage('skills')"><i class="fa-solid fa-compass"></i> Mulai Jelajahi</button>
+        </div>
+    </section>
+
+    <!-- 2. HALAMAN KEAHLIAN / AHLI -->
+    <section id="page-skills" class="section-page">
+        <h2 class="page-title">Keahlian & Teknologi</h2>
+        <div class="glass-card content-card">
+            <p>Berikut adalah fondasi teknologi dan bahasa pemrograman yang saya kuasai secara mendalam untuk membangun sistem berkinerja tinggi:</p>
+            
+            <div class="skills-container">
+                <div class="skill-badge"><i class="fa-brands fa-js" style="color: #f7df1e; font-size: 1.2rem;"></i> JavaScript</div>
+                <div class="skill-badge"><i class="fa-brands fa-java" style="color: #f89820; font-size: 1.2rem;"></i> Java</div>
+                <div class="skill-badge"><i class="fa-brands fa-python" style="color: #3776ab; font-size: 1.2rem;"></i> Python</div>
+                <div class="skill-badge"><i class="fa-solid fa-terminal" style="color: #60a5fa; font-size: 1.2rem;"></i> C++ / C</div>
+                <div class="skill-badge"><i class="fa-solid fa-robot" style="color: #f472b6; font-size: 1.2rem;"></i> AI Agent & Bot Automation</div>
+            </div>
+
+            <!-- Terminal Animasi Real Typing Code -->
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span class="terminal-title">gondul_skills.js — Live Typing Animation</span>
+                </div>
+                <div class="terminal-body" id="terminal-text"><span class="cursor"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. HALAMAN PROJEK -->
+    <section id="page-projects" class="section-page">
+        <h2 class="page-title">Portofolio Projek</h2>
+        <div class="project-grid">
+
+            <div class="project-card glass-card">
+                <div>
+                    <span class="project-tag">AI & Automation</span>
+                    <h3>AI Agent Bot (Telegram & WA)</h3>
+                    <p>Integrasi Kecerdasan Buatan (AI) ke dalam bot Telegram & WhatsApp untuk layanan pelanggan otomatis, analisis pesan pintar, dan respons percakapan kontekstual 24/7.</p>
+                </div>
+            </div>
+
+            <div class="project-card glass-card">
+                <div>
+                    <span class="project-tag">Otomatisasi Bisnis</span>
+                    <h3>Bot Jualan Telegram</h3>
+                    <p>Bot e-commerce terotomatisasi di Telegram lengkap dengan katalog produk interaktif, manajemen stok otomatis, hingga kalkulasi pembayaran instan.</p>
+                </div>
+            </div>
+            
+            <div class="project-card glass-card">
+                <div>
+                    <span class="project-tag">Pembuatan Aplikasi</span>
+                    <h3>Multi-Platform App</h3>
+                    <p>Pengembangan aplikasi bisnis interaktif dengan performa optimal untuk desktop & mobile, dilengkapi antarmuka modern dan responsif.</p>
+                </div>
+            </div>
+
+            <div class="project-card glass-card">
+                <div>
+                    <span class="project-tag">Sistem Keuangan</span>
+                    <h3>Web Financial Dashboard</h3>
+                    <p>Platform analisis keuangan modern dengan pemantauan arus kas real-time, grafik interaktif, dan pencatatan transaksi terenkripsi.</p>
+                </div>
+            </div>
+
+            <div class="project-card glass-card">
+                <div>
+                    <span class="project-tag">Solusi Bisnis</span>
+                    <h3>Business ERP & Web System</h3>
+                    <p>Aplikasi web manajemen bisnis terpadu untuk efisiensi inventaris, otomatisasi operasional, serta manajemen relasi pelanggan.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. HALAMAN TENTANG (KARIER SEJAK 2019) -->
+    <section id="page-about" class="section-page">
+        <h2 class="page-title">Tentang Perjalanan Saya</h2>
+        <div class="glass-card content-card">
+            <p>
+                Halo! Nama saya <strong>Gondul</strong>. Saya memulai langkah di dunia pemrograman dan pengembangan perangkat lunak sejak <strong>tahun 2019</strong>. Perjalanan ini dilandasi oleh rasa ingin tahu yang besar tentang bagaimana barisan kode sederhana mampu mengubah ide abstrak menjadi sistem digital yang fungsional dan berdampak nyata.
+            </p>
+            <p>
+                Selama bertahun-tahun bertumbuh di industri teknologi, saya mendedikasikan diri untuk terus belajar, beradaptasi dengan teknologi mutakhir—seperti pengembangan AI Agent dan Bot Otomatisasi—serta menjaga kualitas kode yang bersih, aman, dan scalable.
+            </p>
+            <p style="color: var(--light-purple); font-weight: 500; font-style: italic;">
+                "Konsistensi dalam belajar dan keberanian merangkul tantangan baru adalah kunci utama dalam membangun solusi digital yang luar biasa."
+            </p>
+        </div>
+    </section>
+
+    <!-- 5. HALAMAN KONTAK (FORM LANGSUNG KE WA / TELEGRAM) -->
+    <section id="page-contact" class="section-page">
+        <h2 class="page-title">Hubungi Gondul</h2>
+        <div class="glass-card content-card" style="text-align: center;">
+            <p>Punya gagasan aplikasi, bot jualan, AI agent, atau proyek web menarik? Isi form di bawah untuk langsung terhubung dengan saya:</p>
+            
+            <form class="contact-form" onsubmit="sendDirectMessage(event)">
+                <div class="form-group">
+                    <label for="senderName"><i class="fa-solid fa-user"></i> Nama Anda</label>
+                    <input type="text" id="senderName" class="form-control" placeholder="Masukkan nama kamu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senderMessage"><i class="fa-solid fa-comment-dots"></i> Pesan / Detail Proyek</label>
+                    <textarea id="senderMessage" class="form-control" placeholder="Tuliskan pesan atau ide proyek kamu di sini..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-paper-plane"></i> Kirim Pesan Melalui:</label>
+                    <div class="platform-select">
+                        <div class="platform-option">
+                            <input type="radio" id="targetWA" name="targetPlatform" value="wa" checked>
+                            <label for="targetWA" class="platform-label">
+                                <i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 1.2rem;"></i> WhatsApp
+                            </label>
+                        </div>
+                        <div class="platform-option">
+                            <input type="radio" id="targetTG" name="targetPlatform" value="telegram">
+                            <label for="targetTG" class="platform-label">
+                                <i class="fa-brands fa-telegram" style="color: #24a1de; font-size: 1.2rem;"></i> Telegram
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-paper-plane"></i> Kirim Pesan Sekarang
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2019 - 2026 Portofolio Gondul. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* --- 1. SPA MENU SWITCHER DENGAN ANIMASI FADE-IN --- */
+        function switchPage(pageId) {
+            const pages = document.querySelectorAll('.section-page');
+            pages.forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            const navButtons = document.querySelectorAll('.nav-links button');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+
+            const targetNav = document.getElementById('nav-id' + pageId) || document.getElementById('nav-' + pageId);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pageId === 'skills') {
+                runTerminalAnimation();
+            }
+        }
+
+        /* --- 2. ANIMASI KETIK NYATA (CHARACTER BY CHARACTER) DI TERMINAL --- */
+        let isTypingRunning = false;
+
+        function runTerminalAnimation() {
+            if (isTypingRunning) return; // Mencegah penumpukan animasi jika diklik berkali-kali
+            isTypingRunning = true;
+
+            const terminalText = document.getElementById('terminal-text');
+            terminalText.innerHTML = '<span class="cursor"></span>';
+
+            const rawCode = 
+`<span class="cm">// Memuat Profil Keahlian Gondul (Est. 2019)</span>
+<span class="kw">const</span> expertSkills = {
+    primary: [<span class="str">"JavaScript"</span>, <span class="str">"Java"</span>],
+    advanced: [<span class="str">"Python"</span>, <span class="str">"C++ / C"</span>],
+    specialty: [<span class="str">"Telegram Bot Jualan"</span>, <span class="str">"AI Agent (TG & WA)"</span>],
+    focus: <span class="str">"Web, Mobile & Financial Architecture"</span>
+};
+
+<span class="fn">Object</span>.<span class="fn">keys</span>(expertSkills).<span class="fn">forEach</span>(category => {
+    console.<span class="fn">log</span>(<span class="str">`Loaded skill set: \${category}`</span>);
+});
+<span class="cm">// Status: All AI & Automation Systems Ready! 🚀</span>`;
+
+            // Parsing teks mentah dengan tag HTML agar syntax coloring tetap berjalan saat diketik bertahap
+            let i = 0;
+            let currentOutput = '';
+            
+            function typeWriter() {
+                if (i < rawCode.length) {
+                    // Jika melewati tag HTML (misal '<span class="...">'), langsung masukkan sekaligus agar tag tidak rusak
+                    if (rawCode[i] === '<') {
+                        let tagCloseIdx = rawCode.indexOf('>', i);
+                        if (tagCloseIdx !== -1) {
+                            currentOutput += rawCode.substring(i, tagCloseIdx + 1);
+                            i = tagCloseIdx + 1;
+                        }
+                    } else {
+                        currentOutput += rawCode[i];
+                        i++;
+                    }
+
+                    terminalText.innerHTML = currentOutput + '<span class="cursor"></span>';
+                    setTimeout(typeWriter, 12); // Kecepatan ketik per karakter (semakin kecil semakin cepat)
+                } else {
+                    isTypingRunning = false;
+                }
+            }
+
+            setTimeout(typeWriter, 300);
+        }
+
+        /* --- 3. EFEK HOVER 3D TILT PADA KARTU PROJEK --- */
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.borderColor = 'rgba(192, 132, 252, 0.6)';
+                card.style.boxShadow = '0 20px 40px rgba(168, 85, 247, 0.35)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                card.style.borderColor = 'rgba(216, 180, 254, 0.22)';
+                card.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.4)';
+            });
+        });
+
+        /* --- 4. FUNGSIONALITAS KIRIM PESAN LANGSUNG (WA / TELEGRAM) --- */
+        function sendDirectMessage(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('senderName').value.trim();
+            const message = document.getElementById('senderMessage').value.trim();
+            const platform = document.querySelector('input[name="targetPlatform"]:checked').value;
+
+            if (!name || !message) {
+                alert('Silakan isi nama dan pesan Anda terlebih dahulu.');
+                return;
+            }
+
+            const textContent = `Halo Gondul, saya ${name}.\n\n${message}`;
+
+            if (platform === 'wa') {
+                const waUrl = `https://wa.me/adrenalins?text=${encodeURIComponent(textContent)}`;
+                window.open(waUrl, '_blank');
+            } else if (platform === 'telegram') {
+                const tgUrl = `https://t.me/infalgin`;
+                window.open(tgUrl, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
